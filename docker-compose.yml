@@ -1,0 +1,35 @@
+services: 
+  mongo:
+    restart: always
+    build:
+      context: .
+      dockerfile: ./mongodb/Dockerfile
+    container_name: 'mongo_container'
+    ports:
+      - "27017-27019:27017-27019"
+    networks:
+      - dev-network
+  mysql:
+    command: mysqld --default-authentication-plugin=mysql_native_password    
+    restart: always
+    build:
+      context: .
+      dockerfile: ./mysql/Dockerfile
+    container_name: 'mysql_container'    
+    ports:
+      - "3308:3306"
+    networks:
+      - dev-network
+  sqlserver:
+    restart: always
+    build: 
+      context: .
+      dockerfile: ./msql/Dockerfile
+    container_name: msqlserver_container
+    ports: 
+      - "1433:1433"
+    networks:
+      - dev-network
+networks:
+  dev-network:
+    driver: bridge
